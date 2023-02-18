@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Generator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chat Generator</h1>
+      <form id="prompt-form">
+        <div class="form-group">
+          <label for="prompt-input">Enter your prompt:</label>
+          <textarea class="form-control"  id="prompt-input" name="prompt"> </textarea>
+            
+     </div>
+        <button id="submit-button" type="submit" class="btn btn-primary">
+          Generate Answare
+        </button>
+      </form>
+      <div id="response-container" style="display: none;">
+        <p><strong>Response: </strong></p>
+        <p id="response-text"></p>
+      </div>
+    </div>
+    <script>
+      $('#submit-button').click(function () {
+        let prompt = $('#prompt-input').val.trim()
+        if (!prompt) {
+          alert('Prompt Cannot be Empty')
+          return
+        }
+        $.post('/prompt', { prompt: prompt }, function (data) {
+          $('#response-text').text(data)
+          $('#response-container').show()
+        })
+      })
+    </script>
+  </body>
+</html>
